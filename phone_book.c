@@ -21,17 +21,17 @@ int delete(FILE *, char *);
 /* Utility functions  */
 FILE * open_db_file(); /* Opens the database file. Prints error and
                           quits if it's not available */
-void print_usage(char , char *);  / Prints usage */
-entry load_entries(FILE *);         / Load all entries from the
+void print_usage(char *, char *);  /* Prints usage */
+entry* load_entries(FILE *);         /* Load all entries from the
                                       database file. Returns pointer
                                       to first entry */
-entry create_entry_node(char *, char *);  / Create a new entry
+entry* create_entry_node(char *, char *);  /* Create a new entry
                                               node. Has to be freed by
                                               user. */
-void free_entries(entry ); / TBD Given the first node of a linked list
+void free_entries(entry *); /* TBD Given the first node of a linked list
                                of entries, will free all the nodes */ 
 
-void write_all_entries(entry ); / Given the first node of a linked
+void write_all_entries(entry *); /* Given the first node of a linked
                                     list of entries, will delete the
                                     database file on the disk and save
                                     the given entries into the file */
@@ -113,7 +113,7 @@ FILE *open_db_file() {
 }
   
 void free_entries(entry *p) {
-  /TBD/
+  /*TBD*/
   entry *q;
   q=p;
   while(p){
@@ -137,8 +137,7 @@ void print_usage(char *message, char *progname) {
   printf("    Deletes the entry for the name in the database.\n    Prints 'no match' if there's no such name.\n");
 }
 
-entry *
-create_entry_node(char *name, char *phone) {
+entry * create_entry_node(char *name, char *phone) {
   entry *ret;
   ret = malloc(sizeof(entry));
   strcpy(ret->name, name);
@@ -217,7 +216,7 @@ int delete(FILE *db_file, char *name) {
   entry *p = load_entries(db_file);
   entry *base = p;
   entry *prev = NULL;
-  entry del = NULL ; / Node to be deleted */
+  entry* del = NULL ; /* Node to be deleted */
   int deleted = 0;
   while (p!=NULL) {
     if (strcmp(p->name, name) == 0) {
